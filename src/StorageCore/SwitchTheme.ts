@@ -1,24 +1,16 @@
-export default {
-  namespaced: true,
-  state: {
-    theme: 'dark',
-  },
+import { Themes } from '@/LogicCore/enums'
+import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
-  getters: {
-    theme(state: any) {
-      return state.theme
-    },
-  },
+@Module({ name: 'SwitchTheme', namespaced: true })
+export default class SwitchTheme extends VuexModule {
+  _theme = Themes.dark
 
-  mutations: {
-    updateTheme(state: any, newtheme: string) {
-      state.theme = newtheme
-    },
-  },
+  get theme() {
+    return this._theme
+  }
 
-  actions: {
-    async updateTheme(context: any, newTheme: string) {
-      context.commit('updateTheme', newTheme)
-    },
-  },
+  @Mutation
+  updateTheme(newTheme: Themes) {
+    this._theme = newTheme
+  }
 }

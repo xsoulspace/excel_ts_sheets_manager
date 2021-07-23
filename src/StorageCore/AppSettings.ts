@@ -42,17 +42,13 @@ export default class AppSettings extends VuexModule {
   themeName: SheetManager.AppSettingsThemeName = 'dark'
 
   get getIsDarkTheme() {
-    const dark: SheetManager.AppSettingsThemeName = 'dark'
+    const dark: SheetManager.AppSettingsThemeName = 'base'
     return this.themeName == dark
   }
 
   @Mutation
   setTheme(themeName: SheetManager.AppSettingsThemeName) {
     this.themeName = themeName
-  }
-  @Action
-  async setThemeAct(themeName: SheetManager.AppSettingsThemeName) {
-    this.context.commit('setTheme', themeName)
   }
 
   isTouchDevice: boolean = false

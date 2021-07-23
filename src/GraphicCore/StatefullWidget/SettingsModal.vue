@@ -6,7 +6,7 @@
     :title="$t('settings.header')"
   >
     <template v-slot:modalBody>
-      <div class="form" :class="{ '--is-dark': isDarkTheme }">
+      <div :class="{ form: true, '--is-dark': isDarkTheme }">
         <!-- <div class="form__field">
           <checkbox
             :text="$t('settings.sheetsNumerationEnabled')"
@@ -82,6 +82,8 @@ import Checkbox from '@/GraphicCore/StatelessWidget/Checkbox.vue'
 import { AlertTypes } from '@/types/SheetManager'
 import NModal from './NModal.vue'
 import SwitchTheme from '@/StorageCore/SwitchTheme'
+import { Themes } from '@/LogicCore/enums'
+
 import {
   Languages,
   SettingsLangInterface,
@@ -145,24 +147,28 @@ export default class SettingsModal extends Vue {
   // }
 
   public async changeTheme() {
-    const oldValue = this.$store.getters['SwitchTheme/theme']
+    const module = getModule(SwitchTheme, this.$store)
+    const oldValue = module.theme
 
-    console.log(oldValue)
-
-    if (oldValue == 'dark') {
-      await this.$store.dispatch('SwitchTheme/updateTheme', 'base')
+    if (oldValue == Themes.dark) {
+      module.updateTheme(Themes.base)
     } else {
-      await this.$store.dispatch('SwitchTheme/updateTheme', 'dark')
+      module.updateTheme(Themes.dark)
     }
-
-    const newValue = this.$store.getters['SwitchTheme/gettTheme']
+    const newValue = this.isDarkTheme
     console.log(newValue)
   }
-
   public get isDarkTheme() {
-    const module = getModule(AppSettings, this.$store)
-    return module.getIsDarkTheme
+    const module = getModule(SwitchTheme, this.$store)
+    const theme = module.theme
+    const dark = Themes.dark
+    return theme == dark
   }
+
+  // public get isDarkTheme() {
+  //   const module = getModule(AppSettings, this.$store)
+  //   return module.getIsDarkTheme
+  // }
   changeIsTouchDevice() {
     this.$data._isTouchDevice = !this.$data._isTouchDevice
   }
