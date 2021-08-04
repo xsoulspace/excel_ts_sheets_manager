@@ -3,7 +3,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    node: true
+    node: true,
   },
   extends: [
     'plugin:vue/vue3-recommended',
@@ -11,11 +11,15 @@ module.exports = {
     '@vue/typescript/recommended',
     // 他のルールの下に追加
     '@vue/prettier',
-    '@vue/prettier/@typescript-eslint'
+    '@vue/prettier/@typescript-eslint',
   ],
   parserOptions: {
-    ecmaVersion: 2021
+    ecmaVersion: 2021,
   },
+  optimizeDeps: {
+    include: ['@ant-design/icons-vue'],
+  },
+
   plugins: [],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -38,8 +42,8 @@ module.exports = {
       'error',
       {
         destructuring: 'any',
-        ignoreReadBeforeAssign: false
-      }
-    ]
-  }
+        ignoreReadBeforeAssign: false,
+      },
+    ],
+  },
 }
